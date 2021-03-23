@@ -1,13 +1,24 @@
 <template>
   <div class="searchbar">
-    <input type="text" placeholder="Search for any IP address or domain" />
-    <button><img src="../assets/icon-arrow.svg" alt="" /></button>
+    <input v-model="searchValue" @keyup.enter="up" type="text" placeholder="Search for any IP address or domain" />
+    <button @click="up"><img src="../assets/icon-arrow.svg" alt="" /></button>
   </div>
 </template>
 
 <script>
+import { useStore } from 'vuex';
+import  {ref}  from "vue";
 export default {
   name: "searchbar",
+  setup(props,context){
+     const searchValue = ref("");
+     const store = useStore();
+const up = ()=>{
+store.commit('enterip',searchValue)
+  context.emit('enter');
+}
+return {up,searchValue}
+  }
 };
 </script>
 

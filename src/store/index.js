@@ -2,15 +2,25 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
-    ip: "8.8.8.8",
-    lat: 58.505,
-    lng: -0.09,
+    ip: "",
+    lat: null,
+    lng: null,
+    location:"",
+    timezone:"",
+    isp:""
   },
   mutations: {
+    enterip(state,newvalue){
+state.ip = newvalue;
+    },
     applyinfo(state, res) {
+      state.ip = res.ip;
       state.lat = res.location.lat;
       state.lng = res.location.lng;
-      console.log(state.lat, state.lng);
+      state.location = res.location.city + res.location.region;
+      state.timezone = res.location.timezone;
+      state.isp = res.isp;
+      console.log(res);
     },
   },
   actions: {

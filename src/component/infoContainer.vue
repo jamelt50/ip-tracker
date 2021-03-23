@@ -2,25 +2,31 @@
   <div class="infoContainer">
     <div>
       <h5>IP ADDRESS</h5>
-      <span>192.212.174.101</span>
+      <span>{{store.state.ip}}</span>
     </div>
     <div>
       <h5>LOCATION</h5>
-      <span>Brooklyn,NY 10001</span>
+      <span>{{store.state.location}}</span>
     </div>
     <div>
       <h5>TIMEZONE</h5>
-      <span>UTC-05:00</span>
+      <span>UTC {{store.state.timezone}}</span>
     </div>
     <div>
       <h5>ISP</h5>
-      <span>SpaceX Starlink</span>
+      <span>{{store.state.isp}}</span>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import { useStore } from 'vuex';
+export default {
+  setup(){
+    const store = useStore();
+    return{store}
+  }
+};
 </script>
 
 <style lang="scss">

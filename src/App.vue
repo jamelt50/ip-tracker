@@ -1,8 +1,8 @@
 <template>
   <div class="banner"></div>
-  <h1 @click="store.dispatch('getinfo')">IP Address Tracker</h1>
-  <searchbar />
-  <infoContainer @click="tryy" />
+  <h1>IP Address Tracker</h1>
+  <searchbar @enter="search" />
+  <infoContainer />
   <mapp />
 </template>
 
@@ -19,29 +19,37 @@ export default {
   components: { searchbar, infoContainer, mapp },
   setup() {
     const store = useStore();
-    var mymap = ref();
+    store.dispatch("getinfo");
+    const mymap = ref();
+    const marker = ref();
     const myap = onMounted(() => {
-      mymap.value = L.map("mapid").setView([51.505, -0.09], 13);
-      L.tileLayer(
-        "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw",
-        {
-          maxZoom: 18,
-          attribution:
-            'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
-            'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-          id: "mapbox/streets-v11",
-          tileSize: 512,
-          zoomOffset: -1,
-        }
-      ).addTo(mymap.value);
+      if (store.state.lat && store.state.lng) {
+        mymap.value = L.map("mapid").setView(
+          [store.state.lat, store.state.lng],
+          5
+        );
+        L.tileLayer(
+          "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw",
+          {
+            maxZoom: 18,
+            attribution:
+              'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+              'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            id: "mapbox/streets-v11",
+            tileSize: 512,
+            zoomOffset: -1,
+          }
+        ).addTo(mymap.value);
+        marker.value = L.marker([store.state.lat, store.state.lng]).addTo(
+          mymap.value
+        );
+      }
     });
-    const info = computed(() => {
-      return { ip: store.state.ip, lat: store.state.lat, lng: store.state.lng };
-    });
-    const tryy = () => {
-      mymap.value.setView([info.value.lat, info.value.lng], 13);
+    const search = () => {
+      store.dispatch("getinfo");
+      mymap.value.setView([store.state.lat, store.state.lng], 5);
     };
-    return { store, tryy };
+    return { store, search };
   },
 };
 </script>
@@ -62,7 +70,6 @@ export default {
 body {
   font-family: "Rubik", sans-serif;
   font-size: 16px;
-  background-color: blue;
 }
 .banner {
   background: url("./assets/pattern-bg.png") no-repeat;
