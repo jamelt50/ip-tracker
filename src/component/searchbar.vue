@@ -54,6 +54,10 @@ export default {
     border: none;
     padding-left: 1.125rem;
     flex-grow: 1;
+    font-size: 1rem;
+    &::placeholder {
+      font-size: 0.825rem;
+    }
   }
 }
 </style>
