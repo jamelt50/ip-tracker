@@ -44,6 +44,7 @@ export default {
     border: none;
     background-color: var(--VeryDarkGray);
     transition: all 0.3s ease-in-out;
+    outline: none !important;
     cursor: pointer;
     &:hover {
       opacity: 0.8;
@@ -55,6 +56,7 @@ export default {
     padding-left: 1.125rem;
     flex-grow: 1;
     font-size: 1rem;
+    outline: none !important;
     &::placeholder {
       font-size: 0.825rem;
     }

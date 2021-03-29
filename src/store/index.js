@@ -40,7 +40,7 @@ export default createStore({
       state.marker = L.marker([state.lat, state.lng]).addTo(state.mymap);
     },
     changemap(state) {
-      state.mymap.setView([state.lat, state.lng], 7);
+      state.mymap.setView([state.lat + 1, state.lng], 7);
       state.marker.setLatLng([state.lat, state.lng]);
     },
   },
