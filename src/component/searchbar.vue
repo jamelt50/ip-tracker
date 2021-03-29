@@ -1,30 +1,36 @@
 <template>
   <div class="searchbar">
-    <input v-model="searchValue" @keyup.enter="up" type="text" placeholder="Search for any IP address or domain" />
+    <input
+      v-model="searchValue"
+      @keyup.enter="up"
+      type="text"
+      placeholder="Search for any IP address or domain"
+    />
     <button @click="up"><img src="../assets/icon-arrow.svg" alt="" /></button>
   </div>
 </template>
 
 <script>
-import { useStore } from 'vuex';
-import  {ref}  from "vue";
+import { useStore } from "vuex";
+import { ref } from "vue";
 export default {
   name: "searchbar",
-  setup(props,context){
-     const searchValue = ref("");
-     const store = useStore();
-const up = ()=>{
-store.commit('enterip',searchValue)
-  context.emit('enter');
-}
-return {up,searchValue}
-  }
+  setup(props, context) {
+    const searchValue = ref("");
+    const store = useStore();
+    const up = () => {
+      store.commit("enterip", searchValue.value);
+      context.emit("enter");
+    };
+    return { up, searchValue };
+  },
 };
 </script>
 
 <style lang="scss">
 .searchbar {
   width: 87%;
+  max-width: 34.75rem;
   height: 3.625rem;
   background-color: white;
   display: flex;

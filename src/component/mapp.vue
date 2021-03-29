@@ -3,9 +3,17 @@
 </template>
 
 <script>
+import { onMounted } from "vue";
+import { useStore } from "vuex";
+
 export default {
   name: "mapp",
-  setup() {},
+  setup() {
+    const store = useStore();
+    const map = onMounted(() => {
+      store.commit("addmap");
+    });
+  },
 };
 </script>
 
