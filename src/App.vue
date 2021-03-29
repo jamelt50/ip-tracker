@@ -42,9 +42,7 @@ body {
   font-family: "Rubik", sans-serif;
   font-size: 16px;
 }
-#app {
-  min-height: 100vh;
-}
+
 .banner {
   background: url("./assets/pattern-bg.png") no-repeat;
   background-size: cover;
